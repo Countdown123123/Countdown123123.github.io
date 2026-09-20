@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Countdown</title>
 
 <style>
@@ -13,227 +14,197 @@
 }
 
 :root {
-    --accent: #ff6a00;
-    --accent-light: #ff9d52;
+    --orange: #ff6a00;
+    --orange2: #ff9d52;
     --bg: #070707;
-    --card: rgba(255,255,255,0.06);
-    --border: rgba(255,255,255,0.12);
-    --text: #ffffff;
-    --muted: #999999;
+    --card: rgba(255,255,255,.07);
+    --border: rgba(255,255,255,.13);
+    --text: #fff;
+    --muted: #999;
 }
 
 body {
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     font-family: Arial, Helvetica, sans-serif;
     color: var(--text);
+
     background:
-        radial-gradient(circle at 50% 0%, rgba(255,106,0,0.16), transparent 35%),
-        radial-gradient(circle at 0% 100%, rgba(255,106,0,0.08), transparent 30%),
-        var(--bg);
-    overflow-x: hidden;
-}
-
-.background {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.orb {
-    position: absolute;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: rgba(255,106,0,0.06);
-    filter: blur(70px);
-    animation: float 8s ease-in-out infinite alternate;
-}
-
-.orb.one {
-    top: -100px;
-    left: -100px;
-}
-
-.orb.two {
-    right: -100px;
-    bottom: -100px;
-    animation-delay: -4s;
-}
-
-@keyframes float {
-    from {
-        transform: translate(0, 0);
-    }
-    to {
-        transform: translate(40px, -30px);
-    }
+        radial-gradient(circle at 50% 0%, rgba(255,106,0,.18), transparent 35%),
+        #070707;
 }
 
 .container {
-    position: relative;
-    z-index: 1;
-    width: min(100%, 1000px);
+    width: min(100%, 900px);
     text-align: center;
 }
 
 .badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    border: 1px solid rgba(255,106,0,0.3);
+    display: inline-block;
+    padding: 8px 15px;
     border-radius: 999px;
-    background: rgba(255,106,0,0.08);
-    color: var(--accent-light);
+
+    color: var(--orange2);
+    background: rgba(255,106,0,.1);
+    border: 1px solid rgba(255,106,0,.3);
+
     font-size: 13px;
-    font-weight: 700;
+    font-weight: bold;
     letter-spacing: 1.5px;
     text-transform: uppercase;
+
     margin-bottom: 25px;
 }
 
-.dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 12px var(--accent);
-}
-
 h1 {
-    font-size: clamp(42px, 9vw, 90px);
-    line-height: 0.95;
+    font-size: clamp(45px, 9vw, 90px);
     letter-spacing: -4px;
-    margin-bottom: 18px;
+    margin-bottom: 15px;
 }
 
 .subtitle {
     color: var(--muted);
+    margin-bottom: 35px;
+}
+
+.setup {
+    max-width: 550px;
+    margin: auto;
+    padding: 25px;
+
+    border: 1px solid var(--border);
+    border-radius: 22px;
+
+    background: var(--card);
+    backdrop-filter: blur(20px);
+}
+
+.field {
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    color: #bbb;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    background: rgba(0,0,0,.35);
+    color: white;
+
     font-size: 16px;
-    margin-bottom: 45px;
+    outline: none;
+}
+
+input:focus {
+    border-color: var(--orange);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+
+    border: 0;
+    border-radius: 12px;
+
+    background: var(--orange);
+    color: white;
+
+    font-size: 15px;
+    font-weight: bold;
+
+    cursor: pointer;
+    transition: .2s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(255,106,0,.25);
+}
+
+.share {
+    margin-top: 10px;
+    background: rgba(255,255,255,.08);
 }
 
 .countdown {
-    display: grid;
+    display: none;
+
     grid-template-columns: repeat(4, 1fr);
     gap: 14px;
 }
 
 .unit {
-    padding: 30px 15px;
+    padding: 30px 10px;
+
     border: 1px solid var(--border);
-    border-radius: 22px;
+    border-radius: 20px;
+
     background: var(--card);
     backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
 }
 
 .number {
-    font-size: clamp(42px, 8vw, 80px);
+    font-size: clamp(40px, 8vw, 80px);
     font-weight: 800;
-    line-height: 1;
-    letter-spacing: -3px;
     font-variant-numeric: tabular-nums;
 }
 
 .label {
-    margin-top: 12px;
+    margin-top: 10px;
+
     color: var(--muted);
-    font-size: 12px;
-    font-weight: 700;
+
+    font-size: 11px;
+    font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
 .target {
-    margin-top: 30px;
-    color: var(--muted);
-    font-size: 14px;
-}
-
-.target span {
-    color: #ddd;
-}
-
-.controls {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+    display: none;
     margin-top: 25px;
-}
-
-button {
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 11px 18px;
-    color: white;
-    background: rgba(255,255,255,0.06);
-    cursor: pointer;
-    font-weight: 700;
-    transition: 0.2s;
-}
-
-button:hover {
-    border-color: rgba(255,106,0,0.5);
-    background: rgba(255,106,0,0.12);
-    transform: translateY(-2px);
+    color: var(--muted);
 }
 
 .finished {
     display: none;
+
     font-size: clamp(35px, 8vw, 80px);
     font-weight: 800;
-    color: var(--accent);
-    text-shadow: 0 0 35px rgba(255,106,0,0.35);
+
+    color: var(--orange);
 }
 
 .error {
-    display: none;
-    margin: 30px auto;
-    max-width: 600px;
-    padding: 18px;
-    border: 1px solid rgba(255,80,80,0.3);
-    border-radius: 15px;
-    background: rgba(255,50,50,0.08);
-    color: #ff8585;
+    color: #ff7777;
+    margin-top: 15px;
 }
 
-@media (max-width: 650px) {
+@media(max-width:650px) {
     .countdown {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .unit {
-        padding: 25px 10px;
-        border-radius: 18px;
     }
 
     h1 {
         letter-spacing: -2px;
     }
 
-    .subtitle {
-        margin-bottom: 30px;
-    }
-}
-
-@media (max-width: 380px) {
-    body {
-        padding: 14px;
-    }
-
-    .number {
-        font-size: 38px;
-    }
-
     .unit {
-        padding: 20px 8px;
+        padding: 25px 8px;
     }
 }
 </style>
@@ -241,23 +212,55 @@ button:hover {
 
 <body>
 
-<div class="background">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-</div>
+<div class="container">
 
-<main class="container">
+    <div class="badge">Countdown</div>
 
-    <div class="badge">
-        <span class="dot"></span>
-        Countdown
-    </div>
-
-    <h1 id="title">Until the Event</h1>
+    <h1 id="title">Create Countdown</h1>
 
     <p class="subtitle" id="subtitle">
-        Time remaining
+        Choose when your countdown should end.
     </p>
+
+    <!-- SETUP -->
+
+    <div class="setup" id="setup">
+
+        <div class="field">
+            <label>Countdown title</label>
+            <input
+                id="titleInput"
+                type="text"
+                placeholder="Christmas"
+            >
+        </div>
+
+        <div class="field">
+            <label>Date</label>
+            <input
+                id="dateInput"
+                type="date"
+            >
+        </div>
+
+        <div class="field">
+            <label>Time</label>
+            <input
+                id="timeInput"
+                type="time"
+                value="00:00"
+            >
+        </div>
+
+        <button onclick="createCountdown()">
+            Create Countdown
+        </button>
+
+        <div id="error" class="error"></div>
+
+    </div>
+
+    <!-- COUNTDOWN -->
 
     <div class="countdown" id="countdown">
 
@@ -284,129 +287,230 @@ button:hover {
     </div>
 
     <div class="finished" id="finished">
-        THE EVENT HAS STARTED
+        EVENT STARTED
     </div>
 
-    <div class="target">
-        Target:
-        <span id="targetDate">—</span>
+    <div class="target" id="target">
+        Target: <span id="targetText"></span>
     </div>
 
-    <div class="error" id="error">
-        Invalid countdown date.<br><br>
-        Example:
-        <strong>?date=2026-12-24T18:00:00</strong>
-    </div>
+    <button
+        class="share"
+        id="shareButton"
+        style="display:none"
+        onclick="copyLink()"
+    >
+        🔗 Copy Countdown Link
+    </button>
 
-    <div class="controls">
-        <button onclick="shareCountdown()">Share</button>
-        <button onclick="copyURL()">Copy URL</button>
-    </div>
-
-</main>
+</div>
 
 <script>
-const params = new URLSearchParams(window.location.search);
 
-const dateString = params.get("date");
-const title = params.get("title");
+let targetDate;
+let timer;
 
-if (title) {
-    document.getElementById("title").textContent = title;
-}
+const params = new URLSearchParams(location.search);
 
-let targetDate = null;
+const urlDate = params.get("date");
+const urlTitle = params.get("title");
 
-if (dateString) {
-    targetDate = new Date(dateString);
-}
 
-const error = document.getElementById("error");
-const countdown = document.getElementById("countdown");
-const finished = document.getElementById("finished");
+// If a date exists in the URL,
+// automatically show the countdown.
 
-if (!dateString || isNaN(targetDate.getTime())) {
-    error.style.display = "block";
-    countdown.style.display = "none";
-    document.getElementById("targetDate").textContent = "Invalid";
-} else {
+if (urlDate) {
 
-    document.getElementById("targetDate").textContent =
-        targetDate.toLocaleString(undefined, {
-            dateStyle: "medium",
-            timeStyle: "short"
-        });
+    const parsed = new Date(urlDate);
 
-    function updateCountdown() {
+    if (!isNaN(parsed.getTime())) {
 
-        const now = new Date();
-        const difference = targetDate.getTime() - now.getTime();
+        targetDate = parsed;
 
-        if (difference <= 0) {
+        document.getElementById("setup").style.display = "none";
 
-            document.getElementById("days").textContent = "00";
-            document.getElementById("hours").textContent = "00";
-            document.getElementById("minutes").textContent = "00";
-            document.getElementById("seconds").textContent = "00";
+        document.getElementById("countdown").style.display = "grid";
 
-            countdown.style.display = "none";
-            finished.style.display = "block";
+        document.getElementById("target").style.display = "block";
 
-            document.getElementById("subtitle").textContent =
-                "The countdown has reached zero.";
+        document.getElementById("shareButton").style.display = "block";
 
-            return;
+        if (urlTitle) {
+            document.getElementById("title").textContent = urlTitle;
+        } else {
+            document.getElementById("title").textContent = "Countdown";
         }
 
-        const totalSeconds = Math.floor(difference / 1000);
+        document.getElementById("subtitle").textContent =
+            "Time remaining";
 
-        const days = Math.floor(totalSeconds / 86400);
-        const hours = Math.floor((totalSeconds % 86400) / 3600);
-        const minutes = Math.floor((totalSeconds % 3600) / 60);
-        const seconds = totalSeconds % 60;
+        document.getElementById("targetText").textContent =
+            targetDate.toLocaleString();
 
-        document.getElementById("days").textContent =
-            String(days).padStart(2, "0");
-
-        document.getElementById("hours").textContent =
-            String(hours).padStart(2, "0");
-
-        document.getElementById("minutes").textContent =
-            String(minutes).padStart(2, "0");
-
-        document.getElementById("seconds").textContent =
-            String(seconds).padStart(2, "0");
+        startCountdown();
     }
+}
+
+
+// Create a new countdown
+
+function createCountdown() {
+
+    const title =
+        document.getElementById("titleInput").value.trim();
+
+    const date =
+        document.getElementById("dateInput").value;
+
+    const time =
+        document.getElementById("timeInput").value;
+
+    const error =
+        document.getElementById("error");
+
+    error.textContent = "";
+
+    if (!date) {
+        error.textContent = "Please choose a date.";
+        return;
+    }
+
+    if (!time) {
+        error.textContent = "Please choose a time.";
+        return;
+    }
+
+    const localDate =
+        new Date(`${date}T${time}`);
+
+    if (isNaN(localDate.getTime())) {
+        error.textContent = "Invalid date or time.";
+        return;
+    }
+
+    if (localDate <= new Date()) {
+        error.textContent = "Please choose a future date.";
+        return;
+    }
+
+    const url =
+        new URL(window.location.href);
+
+    url.searchParams.set(
+        "date",
+        localDate.toISOString()
+    );
+
+    if (title) {
+        url.searchParams.set(
+            "title",
+            title
+        );
+    }
+
+    window.location.href = url.toString();
+}
+
+
+// Countdown engine
+
+function startCountdown() {
 
     updateCountdown();
-    setInterval(updateCountdown, 1000);
+
+    clearInterval(timer);
+
+    timer = setInterval(
+        updateCountdown,
+        1000
+    );
 }
 
-function shareCountdown() {
 
-    if (navigator.share) {
+function updateCountdown() {
 
-        navigator.share({
-            title: document.title,
-            text: "Check out this countdown!",
-            url: window.location.href
-        });
+    const now = new Date();
 
-    } else {
-        copyURL();
+    const difference =
+        targetDate - now;
+
+    if (difference <= 0) {
+
+        clearInterval(timer);
+
+        document.getElementById("countdown").style.display =
+            "none";
+
+        document.getElementById("target").style.display =
+            "none";
+
+        document.getElementById("finished").style.display =
+            "block";
+
+        document.getElementById("subtitle").textContent =
+            "The countdown has reached zero.";
+
+        return;
     }
+
+    const totalSeconds =
+        Math.floor(difference / 1000);
+
+    const days =
+        Math.floor(totalSeconds / 86400);
+
+    const hours =
+        Math.floor((totalSeconds % 86400) / 3600);
+
+    const minutes =
+        Math.floor((totalSeconds % 3600) / 60);
+
+    const seconds =
+        totalSeconds % 60;
+
+    document.getElementById("days").textContent =
+        String(days).padStart(2, "0");
+
+    document.getElementById("hours").textContent =
+        String(hours).padStart(2, "0");
+
+    document.getElementById("minutes").textContent =
+        String(minutes).padStart(2, "0");
+
+    document.getElementById("seconds").textContent =
+        String(seconds).padStart(2, "0");
 }
 
-function copyURL() {
 
-    navigator.clipboard.writeText(window.location.href)
+// Copy the generated URL
+
+function copyLink() {
+
+    navigator.clipboard
+        .writeText(window.location.href)
         .then(() => {
-            alert("Countdown URL copied!");
+
+            const button =
+                document.getElementById("shareButton");
+
+            const oldText =
+                button.textContent;
+
+            button.textContent =
+                "✓ Link Copied!";
+
+            setTimeout(() => {
+                button.textContent = oldText;
+            }, 2000);
+
         })
         .catch(() => {
+
             alert(window.location.href);
+
         });
 }
+
 </script>
 
 </body>
